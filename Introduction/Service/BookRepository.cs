@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Introduction.Entity;
 using Introduction.IService;
+using Microsoft.EntityFrameworkCore;
 
 namespace Introduction.Service
 {
@@ -16,17 +17,58 @@ namespace Introduction.Service
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Book> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
             return _dbContext.Books;
         }
 
-        public Book GetBookById(int bookId)
+        public async Task<IEnumerable<Book>> GetAllBooks(string penerbit)
         {
-            return _dbContext.Books.FirstOrDefault(b => b.ID ==
-                                                        bookId);
+            if (string.IsNullOrEmpty(penerbit))
+            {
+                return await GetAllBooks();
+            }
+
+            return await _dbContext.Books.Where(c =>
+                c.Penerbit == penerbit).Include(b =>
+                b.Category).ToListAsync();
         }
 
+        public async  Task<Book> GetBookById(int bookId)
+        {
+            return await _dbContext.Books.FirstOrDefaultAsync(b => b.ID ==
+                                                        bookId);
+        }
+        public async Task<IEnumerable<Book>> GetAllBooksByCategoryId(int id)
+        {
+            return await _dbContext.Books.Where(c => c.CategoryID == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Book>> GetAllBooks(string penerbit, string keyword)
+        {
+            if (string.IsNullOrEmpty(penerbit) && string.IsNullOrEmpty(keyword))
+            {
+                return await GetAllBooks();
+            }
+
+            var books = _dbContext.Books.AsQueryable();
+
+            if (!string.IsNullOrEmpty(penerbit))
+            {
+                books = books.Where(c => c.Penerbit == penerbit);
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                books = books.Where(c => c.Judul.Contains(keyword) ||
+                                         c.Penulis.Contains(keyword) ||
+                                         c.Penerbit.Contains(keyword) || 
+                                         c.Deskripsi.Contains(keyword));
+            }
+
+            return books.AsEnumerable();
+
+        }
     }
 
 }

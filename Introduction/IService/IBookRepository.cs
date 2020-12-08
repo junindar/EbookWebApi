@@ -8,8 +8,11 @@ namespace Introduction.IService
 {
     public interface IBookRepository
     {
-        IEnumerable<Book> GetAllBooks();
-        Book GetBookById(int bookId);
-
+        Task<IEnumerable<Book>> GetAllBooks();
+        Task<IEnumerable<Book>> GetAllBooks(string penerbit);
+        Task<Book> GetBookById(int bookId);
+        //Interface (IBookRepository)
+        Task<IEnumerable<Book>> GetAllBooksByCategoryId(int id);
+        Task<IEnumerable<Book>> GetAllBooks(string penerbit, string keyword);
     }
 }
