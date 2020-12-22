@@ -13,6 +13,7 @@ namespace Introduction.Profiles
         public BookProfile()
         {
             CreateMap<Book, BookDto>();
+            CreateMap<BookDto, Book>();
         }
     }
 

@@ -69,6 +69,26 @@ namespace Introduction.Service
             return books.AsEnumerable();
 
         }
+
+        public async Task<Book> Insert(Book book)
+        {
+            _dbContext.Add(book);
+            await _dbContext.SaveChangesAsync();
+            return book;
+        }
+
+        public async Task Update(Book book)
+        {
+            _dbContext.Update(book);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(int bookId)
+        {
+            var book = await _dbContext.Books.FindAsync(bookId);
+            _dbContext.Remove(book);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 
 }

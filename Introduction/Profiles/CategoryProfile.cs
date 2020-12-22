@@ -13,6 +13,11 @@ namespace Introduction.Profiles
         public CategoryProfile()
         {
             CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+
+
+            CreateMap<Category, CategoryCreateDto>();
+            CreateMap<CategoryCreateDto, Category>();
         }
     }
 

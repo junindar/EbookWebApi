@@ -10,6 +10,7 @@ namespace Introduction.Controllers
 {
     [Route("api/books")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "LatihanOpenAPIBook")]
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -26,7 +27,7 @@ namespace Introduction.Controllers
         //    var books = await _bookRepository.GetAllBooks();
         //    return Ok(books);
         //}
-        [HttpGet("{bookId}")]
+        [HttpGet("{bookId}",Name= "GetBook")]
         public async Task<ActionResult<Book>> GetBook(int bookId)
         {
             var book = await _bookRepository.GetBookById(bookId);
@@ -41,6 +42,56 @@ namespace Introduction.Controllers
             return Ok(_mapper.Map<IEnumerable<BookDto>>(resultRepo));
         }
 
+
+        [HttpPost]
+        public async Task<ActionResult<BookDto>>
+            CreateBook(BookDto book)
+        {
+            var bookEntity = _mapper.Map<Book>(book);
+            bookEntity = await _bookRepository.Insert(bookEntity);
+
+            var bookForReturn = _mapper.Map<BookDto>(bookEntity);
+
+            return CreatedAtRoute("GetBook", new { bookId = bookForReturn.Id },
+                bookForReturn);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<BookDto>>
+            UpdateBook(BookDto bookDto)
+        {
+            var book = await _bookRepository.GetBookById(bookDto.Id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            book.Judul = bookDto.Judul;
+            book.Penulis = bookDto.Penulis;
+            book.Penerbit = bookDto.Penerbit;
+            book.Deskripsi = bookDto.Deskripsi;
+            book.Status = bookDto.Status;
+            book.Gambar = bookDto.Gambar;
+            book.CategoryID = bookDto.CategoryId;
+            await _bookRepository.Update(book);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<CategoryDto>>
+            DeleteBook(int id)
+        {
+            var cat = await _bookRepository.GetBookById(id);
+
+            if (cat == null)
+            {
+                return NotFound();
+            }
+            await _bookRepository.Delete(id);
+
+
+            return NoContent();
+        }
 
         //[HttpGet()]
         //public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks(string penerbit)

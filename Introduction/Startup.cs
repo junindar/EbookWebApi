@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Introduction.IService;
@@ -8,10 +10,13 @@ using Introduction.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Introduction
 {
@@ -28,6 +33,58 @@ namespace Introduction
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddApiVersioning(v =>
+                {
+                    v.AssumeDefaultVersionWhenUnspecified = true;
+                    v.DefaultApiVersion = new ApiVersion(1, 0);
+                    v.ReportApiVersions = true;
+                    v.ApiVersionReader = ApiVersionReader.Combine(
+                        new HeaderApiVersionReader("X-Version"),
+                        new QueryStringApiVersionReader("ver", "version"),
+                      new UrlSegmentApiVersionReader());
+
+                }
+            );
+            services.AddSwaggerGen(setupAction =>
+            {
+                var xmlFile = "LatihanOpenAPI.xml";
+                var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                setupAction.IncludeXmlComments(xmlFullPath);
+
+                setupAction.SwaggerDoc("LatihanOpenAPICategory",
+                    new OpenApiInfo()
+                    {
+                        Title = "Latihan Open API-Category",
+                        Version = "1",
+                        Description = "Latihan membuat Web API dengan menggunakan.Net Core - Category",
+
+                        Contact = new OpenApiContact()
+                        {
+                            Email = "Junindar@gmail.com",
+                            Name = "Junindar",
+                            Url = new Uri("http://junindar.blogspot.com")
+
+                        }
+                    });
+
+                setupAction.SwaggerDoc("LatihanOpenAPIBook",
+                    new OpenApiInfo()
+                    {
+                        Title = "Latihan Open API-Book",
+                        Version = "1",
+                        Description = "Latihan membuat Web API dengan menggunakan.Net Core - Book",
+
+                        Contact = new OpenApiContact()
+                        {
+                            Email = "Junindar@gmail.com",
+                            Name = "Junindar",
+                            Url = new Uri("http://junindar.blogspot.com")
+
+                        }
+                    });
+
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<PustakaDbContext>(options =>
@@ -54,6 +111,13 @@ namespace Introduction
                     });
                 });
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/Swagger/LatihanOpenAPICategory/swagger.json", "Latihan Open API-Category");
+                setupAction.SwaggerEndpoint("/Swagger/LatihanOpenAPIBook/swagger.json", "Latihan Open API-Book");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseRouting();
             app.UseAuthorization();

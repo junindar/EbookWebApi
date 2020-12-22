@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Introduction", "Introduction\Introduction.csproj", "{6AD871AF-C7A7-4A60-8E46-883606F80F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Introduction", "Introduction\Introduction.csproj", "{6AD871AF-C7A7-4A60-8E46-883606F80F7E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookWebApi.Console", "EbookWebApi.Console\EbookWebApi.Console.csproj", "{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookWebApi.Blazor", "EbookWebApi.Blazor\EbookWebApi.Blazor.csproj", "{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{6AD871AF-C7A7-4A60-8E46-883606F80F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD871AF-C7A7-4A60-8E46-883606F80F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD871AF-C7A7-4A60-8E46-883606F80F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
