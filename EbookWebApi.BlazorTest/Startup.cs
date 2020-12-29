@@ -1,13 +1,17 @@
-using System.Net.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using EbookWebApi.Blazor.Data;
-using EbookWebApi.Blazor.Models;
+using EbookWebApi.BlazorTest.Data;
 
-namespace EbookWebApi.Blazor
+namespace EbookWebApi.BlazorTest
 {
     public class Startup
     {
@@ -24,13 +28,7 @@ namespace EbookWebApi.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            var appSettingSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingSection);
-            services.AddHttpClient<ICategoryRepository, CategoryRepository>();
-            services.AddHttpClient<IBookRepository, BookRepository>();
-            services.AddSingleton<HttpClient>();
-            services.AddTransient<IFileUpload, FileUpload>();
-           
+            services.AddSingleton<WeatherForecastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +41,11 @@ namespace EbookWebApi.Blazor
             else
             {
                 app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

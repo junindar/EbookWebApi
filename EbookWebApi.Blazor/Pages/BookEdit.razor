@@ -19,13 +19,15 @@
 
         <div class="form-group row">
             <label for="Penulis" class="col-sm-3">Penulis: </label>
-            <InputText id="Penulis" @bind-Value="@Book.Penulis" class="form-control col-sm-8" placeholder="Penulis" required></InputText>
+            <InputText id="Penulis" @bind-Value="@Book.Penulis" 
+                       class="form-control col-sm-8" placeholder="Penulis" required></InputText>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Book.Penulis)" />
         </div>
 
         <div class="form-group row">
             <label for="Penerbit" class="col-sm-3">Penerbit: </label>
-            <InputText id="Penerbit" @bind-Value="@Book.Penerbit" class="form-control col-sm-8" placeholder="Penerbit" required></InputText>
+            <InputText id="Penerbit" @bind-Value="@Book.Penerbit" 
+                       class="form-control col-sm-8" placeholder="Penerbit" required></InputText>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Book.Penerbit)" />
         </div>
 
@@ -43,7 +45,9 @@
 
         <div class="form-group row">
             <label for="Deskripsi" class="col-sm-3">Deskripsi Buku: </label>
-            <InputTextArea id="Deskripsi" @bind-Value="@Book.Deskripsi" class="form-control col-sm-8" placeholder="Masukkan Deskripsi Buku"></InputTextArea>
+            <InputTextArea id="Deskripsi" @bind-Value="@Book.Deskripsi" 
+                           class="form-control col-sm-8" 
+                           placeholder="Masukkan Deskripsi Buku"></InputTextArea>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Book.Deskripsi)" />
         </div>
 
@@ -56,7 +60,8 @@
 
         <div class="form-group">
             <label for="Deskripsi" class="col-sm-3">Gambar Buku : </label>
-            <InputText type="hidden" id="Gambar" @bind-Value="@Book.Gambar" class="form-control col-sm-8"></InputText>
+            <InputText type="hidden" id="Gambar" @bind-Value="@Book.Gambar" 
+                       class="form-control col-sm-8"></InputText>
            <InputFile OnChange="@FileUpload" />
             <img id="user_img" height="100" width="90" style="border: solid" src="@ImageData" />
             <br />

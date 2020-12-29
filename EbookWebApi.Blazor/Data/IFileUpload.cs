@@ -9,29 +9,25 @@ namespace EbookWebApi.Blazor.Data
 {
     public interface IFileUpload
     {
-
         Task UploadAsync(MemoryStream file, string fileName);
-      
     }
 
     public class FileUpload : IFileUpload
     {
-
         private IWebHostEnvironment _environment;
-
         public FileUpload(IWebHostEnvironment environment)
         {
             _environment = environment;
         }
-
-
-
-
-        public async Task UploadAsync(MemoryStream file, string fileName)
+        public async Task UploadAsync(MemoryStream file, 
+            string fileName)
         {
-            var uploads = Path.Combine(_environment.WebRootPath, "images", fileName);
+            var uploads = Path.Combine(_environment.WebRootPath,
+                "images", fileName);
 
-            await using FileStream fs = new FileStream(uploads, FileMode.Create, FileAccess.Write);
+            await using FileStream fs = new FileStream(uploads, 
+                FileMode.Create,
+                FileAccess.Write);
             file.WriteTo(fs);
         }
 

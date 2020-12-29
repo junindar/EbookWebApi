@@ -13,27 +13,14 @@ namespace EbookWebApi.Console
     {
         public int Id { get; set; }
         public string Nama { get; set; }
-     
     }
     class Program
     {
-        private static string _url = "http://localhost:5001/";
+        private const string _url = "http://localhost:50001/";
 
         static async Task Main(string[] args)
         {
-            // MainMenu();
-            //client.BaseAddress = new Uri("http://localhost:5001/");
-            //client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //// Get the product
-            //var lst = await GetCategoriesAsync("http://localhost:5001/api/categories");
-            //foreach (var itm in lst)
-            //{
-            //    System.Console.WriteLine($"ID: {itm.Id}\tNama: " +
-            //                      $"{itm.Nama}");
-            //}
+           
             try
             {
                 bool showMenu = true;
@@ -54,12 +41,11 @@ namespace EbookWebApi.Console
 
             }
         }
-
+        //Sintaks detail dapat dilihat di project lampiran
         private static  async Task GetAll()
         {
             using HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(_url);
-            client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -68,27 +54,36 @@ namespace EbookWebApi.Console
             HttpResponseMessage response = await client.GetAsync($"{_url}api/categories");
             if (response.IsSuccessStatusCode)
             {
-                categories = await response.Content.ReadAsAsync<List<Category>>();
+                var responseBody = await response.Content.ReadAsStringAsync();
+                categories = JsonConvert.DeserializeObject<List<Category>>(responseBody);
+
+            }
+            else
+            {
+                System.Console.WriteLine("Sorry, something went wrong");
+                System.Console.ReadLine();
+                return;
             }
 
             if (categories != null)
+            {
                 foreach (var itm in categories)
                 {
                     System.Console.WriteLine($"ID: {itm.Id}\tNama: " +
                                              $"{itm.Nama}");
                 }
+            }
+
 
             GoToMainMenu();
         }
-
-      
+        
         private static async Task GetById()
         {
             System.Console.Write("Please enter Category ID : ");
             string id = System.Console.ReadLine();
             using HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(_url);
-            client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -97,18 +92,30 @@ namespace EbookWebApi.Console
             HttpResponseMessage response = await client.GetAsync($"{_url}api/categories/{id}");
             if (response.IsSuccessStatusCode)
             {
-                category = await response.Content.ReadAsAsync<Category>();
-            }
+                var responseBody = await response.Content.ReadAsStringAsync();
+                category = JsonConvert.DeserializeObject<Category>(responseBody);
 
+            }
+            else
+            {
+                System.Console.WriteLine("Sorry, something went wrong");
+                System.Console.ReadLine();
+                return;
+            }
             if (category != null)
+            {
                 System.Console.WriteLine($"ID: {category.Id}\tNama: " + $"{category.Nama}");
+            }
+            else
+            {
+                System.Console.WriteLine("ID yang dicari tidak ditemukan");
+            } 
 
             GoToMainMenu();
 
 
         }
-
-      
+        
         private static async Task Insert()
         {
             System.Console.Write("Please enter Category Name : ");
@@ -119,15 +126,11 @@ namespace EbookWebApi.Console
             var content = JsonConvert.SerializeObject(cat);
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(_url);
-            client.DefaultRequestHeaders
-                .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/categories");
-            request.Content = new StringContent(content,
-                Encoding.UTF8,
-                "application/json");
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
 
 
             var response = await client.SendAsync(request);
@@ -214,7 +217,7 @@ namespace EbookWebApi.Console
             System.Console.WriteLine("5) Delete Category");
             System.Console.WriteLine("6) Exit");
             System.Console.Write("\r\nSelect an option: ");
-
+           
             switch (System.Console.ReadLine())
             {
                 case "1":
@@ -228,11 +231,11 @@ namespace EbookWebApi.Console
                     await Insert();
                     return true;
                 case "4":
-                  await   Update();
+                    await Update();
                     return true;
-                  
+
                 case "5":
-                  await   Delete();
+                    await Delete();
                     return true;
                 case "6":
                     return false;

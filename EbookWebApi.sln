@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Introduction", "Introductio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookWebApi.Console", "EbookWebApi.Console\EbookWebApi.Console.csproj", "{0FEF9778-8D29-46FE-A08A-2B9622DDAB7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookWebApi.Blazor", "EbookWebApi.Blazor\EbookWebApi.Blazor.csproj", "{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookWebApi.Blazor", "EbookWebApi.Blazor\EbookWebApi.Blazor.csproj", "{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookWebApi.BlazorTest", "EbookWebApi.BlazorTest\EbookWebApi.BlazorTest.csproj", "{03320F6A-A3DD-40E2-B9C4-3FFF4FBC8C61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BCD5DC0-86AA-4F13-B965-099FCE7C7B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03320F6A-A3DD-40E2-B9C4-3FFF4FBC8C61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03320F6A-A3DD-40E2-B9C4-3FFF4FBC8C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03320F6A-A3DD-40E2-B9C4-3FFF4FBC8C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03320F6A-A3DD-40E2-B9C4-3FFF4FBC8C61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

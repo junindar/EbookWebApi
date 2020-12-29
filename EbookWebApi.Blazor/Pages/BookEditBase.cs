@@ -22,8 +22,7 @@ namespace EbookWebApi.Blazor.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
-
+        
         [Parameter]
         public string BookId { get; set; }
 
